@@ -206,3 +206,9 @@ table {
     grid-column: span 5;
     grid-row: 3;
 }
+
+html *
+{
+   font-size: 14px !important;
+   font-family: Arial !important;
+}
