@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <section id="section">
+    <section id="section" style="visibility: hidden;">
         <h1>Section</h1>
         <p>Hello World </p>
     </section>
@@ -23,7 +23,7 @@
 var section = document.getElementById('section');
 
 document.addEventListener('DOMContentLoaded', function() {
-    section.style.visibility = 'hidden';
+    section.style.visibility = 'visible';
 }, false);
 
 function message() {
