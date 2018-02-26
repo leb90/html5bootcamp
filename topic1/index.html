@@ -28,41 +28,39 @@ document.addEventListener('DOMContentLoaded', function() {
 }, false);
 
 
-var miPrimeraPromise = new Promise((resolve, reject) => {
-    // Llamamos a resolve(...) cuando lo que estabamos haciendo finaliza con éxito, y reject(...) cuando falla.
-    // En este ejemplo, usamos setTimeout(...) para simular código asíncrono. 
-    // En la vida real, probablemente uses algo como XHR o una API HTML5.
-    setTimeout(function() {
-        resolve("¡Éxito!"); // ¡Todo salió bien!
-    }, 250);
-});
+
 
 function ajax(data) {
-    xhr.open(data.method, data.url);
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            section.innerHTML += xhr.responseText
-        } else {
-        	section.style.background = "#FC0000";
-            section.innerHTML = xhr.status;
-        }
-    };
+    var callPromise = new Promise((resolve, reject) => {
+        xhr.open(data.method, data.url);
+        // Llamamos a resolve(...) cuando lo que estabamos haciendo finaliza con éxito, y reject(...) cuando falla.
+        // En este ejemplo, usamos setTimeout(...) para simular código asíncrono. 
+        // En la vida real, probablemente uses algo como XHR o una API HTML5.
+
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                resolve(section.innerHTML += xhr.responseText);
+            } else {
+                reject(xhr.status);
+            }
+        };
+
+        // ¡Todo salió bien!
+
+    });
     xhr.send();
+    callPromise.then((successMessage) => {
+            // succesMessage es lo que sea que pasamos en la función resolve(...) de arriba.
+            // No tiene por qué ser un string, pero si solo es un mensaje de éxito, probablemente lo sea.
+        })
+        .catch(
+            // Registrar la razón del rechazo
+            function(reason) {
+                section.style.background = "#FC0000"
+                section.innerHTML = 'Error status '+ reason
+            });
 }
-
-
-
-
-miPrimeraPromise.then((successMessage) => {
-        // succesMessage es lo que sea que pasamos en la función resolve(...) de arriba.
-        // No tiene por qué ser un string, pero si solo es un mensaje de éxito, probablemente lo sea.
-        console.log("¡Sí! " + successMessage);
-    })
-    .catch(
-        // Registrar la razón del rechazo
-        function(reason) {
-            console.log('Manejar promesa rechazada (' + reason + ') aquí.');
-        });
 </script>
 
 </html>
