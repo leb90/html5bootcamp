@@ -17,29 +17,52 @@
         <h1>Section</h1>
         <p>Hello World </p>
     </section>
-    <button onclick="message()">Click me</button>
+    <button onclick="ajax({method:'GET',url:'http://api.icndb.com/jokes/random'})">Click me</button>
 </body>
 <script type="text/javascript">
 var section = document.getElementById('section');
+var xhr = new XMLHttpRequest();
 
 document.addEventListener('DOMContentLoaded', function() {
     section.style.visibility = 'visible';
 }, false);
 
-function message() {
-    alert('este es un mensaje')
+
+var miPrimeraPromise = new Promise((resolve, reject) => {
+    // Llamamos a resolve(...) cuando lo que estabamos haciendo finaliza con éxito, y reject(...) cuando falla.
+    // En este ejemplo, usamos setTimeout(...) para simular código asíncrono. 
+    // En la vida real, probablemente uses algo como XHR o una API HTML5.
+    setTimeout(function() {
+        resolve("¡Éxito!"); // ¡Todo salió bien!
+    }, 250);
+});
+
+function ajax(data) {
+    xhr.open(data.method, data.url);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            section.innerHTML += xhr.responseText
+        } else {
+        	section.style.background = "#FC0000";
+            section.innerHTML = xhr.status;
+        }
+    };
+    xhr.send();
 }
 
-var xhr = new XMLHttpRequest();
-xhr.open('GET', 'http://api.icndb.com/jokes/random');
-xhr.onload = function() {
-    if (xhr.status === 200) {
-        alert('respuesta' + xhr.responseText);
-    } else {
-        alert('Request failed.  Returned status of ' + xhr.status);
-    }
-};
-xhr.send();
+
+
+
+miPrimeraPromise.then((successMessage) => {
+        // succesMessage es lo que sea que pasamos en la función resolve(...) de arriba.
+        // No tiene por qué ser un string, pero si solo es un mensaje de éxito, probablemente lo sea.
+        console.log("¡Sí! " + successMessage);
+    })
+    .catch(
+        // Registrar la razón del rechazo
+        function(reason) {
+            console.log('Manejar promesa rechazada (' + reason + ') aquí.');
+        });
 </script>
 
 </html>
