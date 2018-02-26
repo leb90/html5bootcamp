@@ -13,11 +13,13 @@
 </head>
 
 <body>
-    <section id="section" style="visibility: hidden;">
-        <h1>Section</h1>
-        <p>Hello World </p>
-    </section>
-    <button onclick="ajax({method:'GET',url:'http://api.icndb.com/jokes/random'})">Click me</button>
+    <div id="section">
+        <h2>List of Repositories</h2>
+        <ul id="list">
+        </ul>
+    </div>
+    <button onclick="ajax({method:'GET',url:'https://api.github.com/search/repositories?q=JavaScript'})">Click me</button>
 </body>
-<script src="js/script.js" ></script>
+<script src="js/script.js"></script>
+
 </html>

@@ -34,6 +34,6 @@ function ajax(data) {
             // Registrar la razón del rechazo
             function(reason) {
                 section.style.background = "#FC0000"
-                section.innerHTML = 'Error status ' + reason2
+                section.innerHTML = 'Error status ' + reason
             });
 }
