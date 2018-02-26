@@ -40,7 +40,7 @@ function ajax(data) {
 
         xhr.onload = function() {
             if (xhr.status === 200) {
-                resolve(section.innerHTML += xhr.responseText);
+                resolve(xhr.responseText);
             } else {
                 reject(xhr.status);
             }
@@ -51,6 +51,7 @@ function ajax(data) {
     });
     xhr.send();
     callPromise.then((successMessage) => {
+            section.innerHTML += successMessage
             // succesMessage es lo que sea que pasamos en la función resolve(...) de arriba.
             // No tiene por qué ser un string, pero si solo es un mensaje de éxito, probablemente lo sea.
         })
@@ -58,7 +59,7 @@ function ajax(data) {
             // Registrar la razón del rechazo
             function(reason) {
                 section.style.background = "#FC0000"
-                section.innerHTML = 'Error status '+ reason
+                section.innerHTML = 'Error status ' + reason
             });
 }
 </script>
