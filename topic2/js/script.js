@@ -27,3 +27,41 @@ class Actor {
     }
 
 }
+
+class EventEmitter {
+    constructor() {
+        this.events = [];
+    }
+
+    on(eventName, callback) {
+        if (this.events[eventName]) {
+            this.events[eventName].push(callback);
+        } else {
+            this.events[eventName] = [callback];
+        }
+    }
+
+    emit(eventName) {
+        if (this.events[eventName]) {
+            this.events[eventName].forEach(function(callback) {
+                callback(eventName);
+            });
+        }
+    }
+
+    off(eventName, callback) {
+        if (this.events[eventName]) {
+            let index = this.events[eventName].indexOf(callback);
+            if (index !== -1) {
+                this.events[eventName].splice(index, 1);
+            }
+        }
+    }
+}
+var event = new EventEmitter();
+
+var test = event.on("evento", function(i) {
+	alert('hola')
+})
+
+event.emit('evento')
