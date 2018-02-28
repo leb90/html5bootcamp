@@ -34,34 +34,55 @@ class EventEmitter {
     }
 
     on(eventName, callback) {
-        if (this.events[eventName]) {
-            this.events[eventName].push(callback);
-        } else {
-            this.events[eventName] = [callback];
-        }
+
+        this._eventCollection = this._eventCollection || {};
+        this._eventCollection[eventName] = this._eventCollection[eventName] || [];
+
+        this._eventCollection[eventName].push(callback);
+
+        return this;
     }
 
     emit(eventName) {
-        if (this.events[eventName]) {
-            this.events[eventName].forEach(function(callback) {
-                callback(eventName);
-            });
+        let callback;
+
+        if (!this._eventCollection || !(callback = this._eventCollection[eventName])) {
+            return this;
         }
+
+        callback = callback.slice(0);
+
+        callback.forEach(fn => fn.apply(this));
+
+        return this;
     }
 
     off(eventName, callback) {
-        if (this.events[eventName]) {
-            let index = this.events[eventName].indexOf(callback);
-            if (index !== -1) {
-                this.events[eventName].splice(index, 1);
-            }
+
+
+
+        if (!this._eventCollection || !(callback = this._eventCollection[eventName])) {
+            return this;
         }
+
+        callback.forEach((fn, i) => {
+            if (fn === callback[0] || fn.callback[0] === callback[0]) {
+
+                callback.splice(i, 1);
+            }
+        });
+
+        if (callback.length === 0) {
+            delete this._eventCollection[eventName];
+        }
+
+        return this;
     }
 }
 var event = new EventEmitter();
 
-var test = event.on("evento", function(i) {
-	alert('hola')
-})
+var test = event.on("evento", function() {})
 
 event.emit('evento')
+
+event.off('evento', function() {})
