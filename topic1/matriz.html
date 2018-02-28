@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+</head>
+
+<body>
+</body>
+<script type="text/javascript">
+var matriz = new Array(3);
+
+function matrizCreate() {
+    var table = document.createElement("table");
+    // body...
+    let index = 1;
+    for (i = 0; i < 3; i++) {
+        matriz[i] = new Array(3);
+    }
+
+    for (i = 0; i < 3; i++) {
+        for (e = 0; e < 3; e++) {
+            matriz[i][e] = index;
+            ++index
+        }
+    }
+
+    for (i = 0; i < 3; i++) {
+        let tr = document.createElement("tr")
+        for (e = 0; e < 3; e++) {
+            let td = document.createElement("td");
+            let data = document.createTextNode(matriz[i][e]);
+            td.appendChild(data);
+            tr.appendChild(td);
+        }
+        table.appendChild(tr);
+    }
+    document.body.appendChild(table);
+}
+matrizCreate();
+</script>
+
+</html>
