@@ -1,88 +1,37 @@
-class Movie {
-    constructor(name, year, duration) {
-        this.name = name;
-        this.year = year;
-        this.duration = duration;
-    }
-    play() {
-        console.log("Play..");
-    }
+const Actor = require('./actor');
+const Logger = require('./logger');
+const Movie = require('./movie')
 
-    pause() {
-        console.log("Pause..");
-    }
+let terminator = new Movie('Terminator I', 1985, 60);
+const arnold = new Actor('Arnold Schwarzenegger', 50);
+const actors = [
+    new Actor('Paul Winfield', 50),
+    new Actor('Michael Biehn', 50),
+    new Actor('Linda Hamilton', 50)
+];
 
-    resume() {
-        console.log("Resume..");
-    }
-}
-var movie = new Movie('pepe', 1999, "50:00");
-console.log(movie)
+let social = {
 
-class Actor {
+    share(friendName) {
+        console.log(friendName + " shares " + this.title);
+    },
 
-    constructor(name, age) {
-        this.name = name;
-        this.age = age;
-    }
-
-}
-
-class EventEmitter {
-    constructor() {
-        this.events = [];
-    }
-
-    on(eventName, callback) {
-
-        this._eventCollection = this._eventCollection || {};
-        this._eventCollection[eventName] = this._eventCollection[eventName] || [];
-
-        this._eventCollection[eventName].push(callback);
-
-        return this;
-    }
-
-    emit(eventName) {
-        let callback;
-
-        if (!this._eventCollection || !(callback = this._eventCollection[eventName])) {
-            return this;
-        }
-
-        callback = callback.slice(0);
-
-        callback.forEach(fn => fn.apply(this));
-
-        return this;
-    }
-
-    off(eventName, callback) {
-
-
-
-        if (!this._eventCollection || !(callback = this._eventCollection[eventName])) {
-            return this;
-        }
-
-        callback.forEach((fn, i) => {
-            if (fn === callback[0] || fn.callback[0] === callback[0]) {
-
-                callback.splice(i, 1);
-            }
-        });
-
-        if (callback.length === 0) {
-            delete this._eventCollection[eventName];
-        }
-
-        return this;
+    like(friendName) {
+        console.log(friendName + " likes " + this.title);
     }
 }
-var event = new EventEmitter();
 
-var test = event.on("evento", function() {})
+Object.assign(Movie.prototype, social);
 
-event.emit('evento')
+const logger = new Logger();
 
-event.off('evento', function() {})
+terminator.addCast(arnold);
+terminator.addCast(actors);
+
+terminator.on("play", logger.log);
+terminator.on("pause", logger.log);
+terminator.on("resume", logger.log);
+
+terminator.play();
+terminator.pause();
+terminator.resume();
