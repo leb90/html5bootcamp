@@ -1,4 +1,4 @@
-class Logger {
+export default class Logger {
 
     constructor() {}
 
@@ -6,5 +6,3 @@ class Logger {
         console.log("The event: '" + data + "' has been triggered!");
     }
 }
-
-module.exports = Logger;

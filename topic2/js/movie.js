@@ -1,6 +1,8 @@
-const evEmitter = require('./eventEmitter');
 
-class Movie extends evEmitter {
+import {evEmitter} from './eventEmitter';
+
+
+export default class Movie extends evEmitter {
     constructor(name, year, duration) {
     	super();
         this.name = name;
@@ -31,5 +33,3 @@ class Movie extends evEmitter {
     }
 }
 
-
-module.exports = Movie;

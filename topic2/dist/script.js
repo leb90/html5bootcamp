@@ -1,12 +1,14 @@
 'use strict';
 
-var Actor = require('./actor');
-var Logger = require('./logger');
-var Movie = require('./movie');
+var _actor = require('./actor');
 
-var terminator = new Movie('Terminator I', 1985, 60);
-var arnold = new Actor('Arnold Schwarzenegger', 50);
-var actors = [new Actor('Paul Winfield', 50), new Actor('Michael Biehn', 50), new Actor('Linda Hamilton', 50)];
+var _logger = require('./logger');
+
+var _movie = require('./movie');
+
+var terminator = new _movie.Movie('Terminator I', 1985, 60);
+var arnold = new _actor.Actor('Arnold Schwarzenegger', 50);
+var actors = [new _actor.Actor('Paul Winfield', 50), new _actor.Actor('Michael Biehn', 50), new _actor.Actor('Linda Hamilton', 50)];
 
 var social = {
     share: function share(friendName) {
@@ -17,9 +19,9 @@ var social = {
     }
 };
 
-Object.assign(Movie.prototype, social);
+Object.assign(_movie.Movie.prototype, social);
 
-var logger = new Logger();
+var logger = new _logger.Logger();
 
 terminator.addCast(arnold);
 terminator.addCast(actors);
