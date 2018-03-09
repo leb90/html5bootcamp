@@ -5,7 +5,7 @@ class Movie extends Component {
 		
 		return (
 			<li>
-				{this.props.name} - {this.props.year} -	{this.props.duration} -	<button onClick = {() => this.props.handleUpdate(this.props.id)}>id</button>
+				{this.props.name} - {this.props.year} -	{this.props.duration} -	<button onClick = {() => this.props.handleUpdate(this.props.id)}>id</button><button onClick = {() => this.props.handleDelete(this.props.id)}>delete</button>
 			</li>	
 		);
   	}

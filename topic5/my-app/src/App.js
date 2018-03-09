@@ -15,7 +15,9 @@ class App extends Component {
       ]
     };
     this.updateMovie = this.updateMovie.bind(this)
+    this.deleteMovie = this.deleteMovie.bind(this)
     this.handleChange = this.handleChange.bind(this)
+
   }
 
   makeid() {
@@ -57,24 +59,31 @@ class App extends Component {
     });
 
   }
+  deleteMovie(id) {
+    let movies = this.state.movies
+    for (let i = 0; i < movies.length; i++) {
+      if (movies[i].id === id){
+        movies.splice(i, 1) 
+        this.setState({movies: movies})
+      }
+    }
 
-  handleChange(event) {
-
-
-    this.setState({
-      name: event.target.value,
-      year: event.target.value,
-      duration: event.target.value
-    });
   }
 
-  handleSubmit(event) {
-    //aca guardo
-
-    console.log('0')
-    console.log('An essay was submitted: ' + this.props.value);
-    event.preventDefault();
+  handleChange(e) {
+    let movies = this.state.movies.slice()
+    let change = {}
+    
+    change[e.target.name] = e.target.value
+    for (let i = 0; i < movies.length; i++) {
+      if (movies[i].id === this.dataMovie.id){
+        movies[i][e.target.name] = e.target.value 
+        this.setState({movies: movies})
+      }
+    }   
   }
+ 
+
 
 
 
@@ -88,10 +97,10 @@ class App extends Component {
 			</div>
 			<div>
 				<p><strong>Añade Peliculas</strong></p>
-				<MovieList movies={this.state.movies} updateMovie={this.updateMovie}/>
+				<MovieList movies={this.state.movies} updateMovie={this.updateMovie} deleteMovie={this.deleteMovie}/>
 				<MovieForm onAddMovie={this.handleOnAddMovie.bind(this)} />
         
-				{this.state.movie && <MovieEdit movieEdit={this.state.movie} handleChanges={this.handleChange}/>}
+				{this.state.movie && <MovieEdit movieEdit={this.state.movie} handleChanges={this.handleChange} />}
 			</div>
 		</div>
     );

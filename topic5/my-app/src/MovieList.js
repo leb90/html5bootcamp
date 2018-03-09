@@ -17,6 +17,7 @@ class MovieList extends Component {
 							year={i.year}
 							duration={i.duration}
 							handleUpdate={this.props.updateMovie.bind(this)}
+							handleDelete={this.props.deleteMovie.bind(this)}
 						/>
 					);
 				})}
